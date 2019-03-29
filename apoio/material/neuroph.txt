@@ -1,0 +1,3 @@
+http://neuroph.sourceforge.net/image_recognition_portuguese.html
+
+port do netbeans pra redes neurais
