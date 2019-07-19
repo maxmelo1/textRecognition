@@ -30,7 +30,7 @@ _height = 400.0
 _margin = 0.0 
 ################## 
  
-if USE_CAM: video_capture = cv2.VideoCapture(1) 
+if USE_CAM: video_capture = cv2.VideoCapture(0) 
  
 corners = np.array( 
   [ 
@@ -63,7 +63,7 @@ while True :
  
     closed = cv2.morphologyEx( edges, cv2.MORPH_CLOSE, kernel ) 
  
-    contours, h = cv2.findContours( closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE ) 
+    _, contours, h = cv2.findContours( closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE ) 
  
     for cont in contours: 
  
@@ -85,8 +85,8 @@ while True :
           current = str( time.time() ) 
           cv2.imwrite('out.jpg', out ) 
           phrase = ocr.image_to_string(Image.open('out.jpg'), lang='por') 
-          print phrase 
-          print "Pictures saved" 
+          print (phrase )
+          print ("Pictures saved")
           a = 'espeak -vpt-br+f5 "{0}"'.format(phrase)  
           time.sleep(0.2)
           os.system(a) 
@@ -100,14 +100,14 @@ while True :
  
     #cv2.imshow( 'closed', closed ) 
     #cv2.imshow( 'gray', gray ) 
-    cv2.namedWindow( 'edges', cv2.CV_WINDOW_AUTOSIZE ) 
+    cv2.namedWindow( 'edges' ) 
     cv2.imshow( 'edges', edges ) 
  
-    cv2.namedWindow( 'rgb', cv2.CV_WINDOW_AUTOSIZE ) 
+    cv2.namedWindow( 'rgb' ) 
     cv2.imshow( 'rgb', rgb ) 
  
     if IS_FOUND : 
-      cv2.namedWindow( 'out', cv2.CV_WINDOW_AUTOSIZE ) 
+      cv2.namedWindow( 'out' ) 
       cv2.imshow( 'out', out ) 
  
     if cv2.waitKey(27) & 0xFF == ord('q') : 
@@ -116,7 +116,7 @@ while True :
      
  
   else : 
-    print "Stopped" 
+    print ("Stopped" )
     break 
  
  

@@ -1,1 +1,1 @@
-textRecognition
+projeto textRecognition
