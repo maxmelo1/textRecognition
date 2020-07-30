@@ -125,9 +125,9 @@ def extract_features(dim = (64,64)):
 
     print(hog_data.tail())
 
-    hog_data.to_csv('hog.csv')
-    daisy_data.to_csv('daisy.csv')
-    hu_data.to_csv('hu.csv')
+    hog_data.to_csv('hog.csv', index=False)
+    daisy_data.to_csv('daisy.csv', index=False)
+    hu_data.to_csv('hu.csv', index=False)
 
 
 extract_features(dim=(32,32))
