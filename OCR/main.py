@@ -14,6 +14,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 
+import string
+
 import pickle
 import itertools
 
@@ -88,7 +90,13 @@ def main():
     print(max, ', ', min)
     #print(classification_report(y_test, res))
 
-    labels = list(range(1,63))
+    nros = list(range(0,10))
+    letras_mai = list(string.ascii_uppercase)
+    letras_min = list(string.ascii_lowercase)
+    
+
+    labels = nros + letras_mai + letras_min
+    tick_marks = np.arange(len(labels))
     
 
     plt.figure(figsize = (24,24), dpi=100)
@@ -96,8 +104,8 @@ def main():
     #sns.set(font_scale=1.4)
     #sns.heatmap(cm, center=True, cmap='Greens', fmt=".1f", vmin=0, vmax=max)
     plt.imshow(cm, interpolation='nearest', cmap='Greens' )
-    plt.xticks(labels, rotation=45, fontsize=12)
-    plt.yticks(labels, rotation=45, fontsize=12)
+    plt.xticks(tick_marks, labels, rotation=45, fontsize=12)
+    plt.yticks(tick_marks, labels, fontsize=12)
     plt.colorbar()
     plt.ylabel('Ground Truth')
     plt.xlabel('Predicted Label')
