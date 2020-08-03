@@ -9,8 +9,9 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 
@@ -31,8 +32,12 @@ def main():
     X = data.iloc[:,:-1].values
     y = data['label'].values#.iloc[:,-1]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
+    
 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+    #print(X_train[0])
+    #input()
     #print(data.shape)
     #print(data.tail)
     #print(X_test.shape)
@@ -41,25 +46,30 @@ def main():
     #print(y_train.tail)
     #print(y_train.shape)
 
-    scaler = StandardScaler()
-    scaler.fit(X_train)
-    X_train_std = scaler.transform(X_train)
+    #scaler = StandardScaler()
+    scaler = MinMaxScaler()
+    #scaler.fit(X_train)
+    #X_train_std = scaler.transform(X_train)
 
-    X_test_std = scaler.transform(X_test)
+    #X_test_std = scaler.transform(X_test)
+
+    X_train_std = scaler.fit_transform(X_train)
+    X_test_std = scaler.fit_transform(X_test)
 
 
-    eps = 1e-4
-    X_train_log = np.log(X_train+eps )
-    X_test_log  = np.log(X_test+eps)
+    #eps = 1e-4
+    #X_train_log = np.log(X_train+eps )
+    #X_test_log  = np.log(X_test+eps)
 
     #print(X_train_log[0])
 
     #clf = MLPClassifier(solver='sgd', alpha=1e-5, power_t=0.25, hidden_layer_sizes=(140, 160, 63), random_state=3, activation='relu', max_iter=500, verbose=10, learning_rate_init=.1, learning_rate='adaptive', n_iter_no_change=30)
-    clf = MLPClassifier(solver='adam', hidden_layer_sizes=(62, 124, 124 , 62),  
-        activation='relu', max_iter=500, verbose=10, learning_rate_init=.001, 
-        learning_rate='adaptive', n_iter_no_change=90)
+    clf = MLPClassifier(solver='adam', hidden_layer_sizes=(324, 162, 62),  
+        activation='relu', max_iter=1000, verbose=10, learning_rate_init=.001, 
+        learning_rate='adaptive', n_iter_no_change=300, early_stopping=True)
     #clf = DecisionTreeClassifier()
     #clf = svm.SVC(gamma='auto', C=2)
+    #clf = KNeighborsClassifier(n_neighbors=1)
 
     #clf = svm.LinearSVC(C=2, max_iter=1000 )
 

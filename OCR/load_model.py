@@ -19,10 +19,10 @@ import numpy as np
 #supondo que treinou o clf com hog
 def extract_features_hog(filename, dim=(32,32)):
 	img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-	edged = imutils.auto_canny(img)
+	_,edged = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 	resized_img = cv2.resize(edged,dim)
 
-	return hog(resized_img, orientations=8, pixels_per_cell=(8, 8), cells_per_block=(2, 2), multichannel=False, transform_sqrt=True, block_norm="L1")
+	return hog(resized_img, orientations=9, pixels_per_cell=(8, 8), cells_per_block=(2, 2), multichannel=False, transform_sqrt=True, block_norm="L1")
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
 	
 	clf = pickle.load(open(filename, 'rb'))
 
-	img_name = 'test2.png'
+	img_name = 'test.png'
 
 	#img = np.zeros(1)
 	#img = np.concatenate((img, extract_features_hog(img_name)), axis=0)
@@ -40,7 +40,7 @@ def main():
 	#print(img.shape)
 
 	#é o nro da pasta das amostras de m, no dataset
-	gt = 49
+	gt = 23
 
 	#se tiver várias amostras pra testar
 	#result = clf.score(X_test, Y_test)
